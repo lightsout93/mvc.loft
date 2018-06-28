@@ -1,0 +1,27 @@
+{% extends 'template.html' %}
+{% block title %}Файлы пользователей{% endblock %}
+{% block content %}
+{% if session == false %}
+<h2 class="container">Доступно только авторизованным пользователям</h2>
+{% else %}
+<div class="container">
+      <h2>Информация выводится из списка файлов</h2>
+      <table class="table table-bordered">
+        <tr>
+          <th>Название файла</th>
+          <th>Фотография</th>
+          <th>Действия</th>
+        </tr>
+        {% for file in files  %}
+        <tr>
+          <td>{{ file.login }}.jpg</td>
+          <td><img src="../public/upload/{{ file.login }}.jpg" alt=""></td>
+          <td>
+            <a href="file?id={{ file.id }}">Удалить аватарку пользователя</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+</div>
+{% endif %}
+{% endblock %}

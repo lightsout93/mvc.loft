@@ -1,0 +1,16 @@
+{
+  "autoload": {
+    "psr-4":
+    {
+      "App\\": "app/"
+    }
+  },
+  "require": {
+    "wixel/gump": "dev-master",
+    "twig/twig": "^2.4",
+    "intervention/image": "^2.4",
+    "illuminate/database": "^5.6",
+    "fzaninotto/faker": "^1.7",
+    "illuminate/events": "^5.6"
+  }
+}

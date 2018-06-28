@@ -1,0 +1,5 @@
+php_flag display_errors Off
+RewriteEngine On
+RewriteRule ^inc/.*$ public/index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ public/index.php [QSA,L]
