@@ -1,6 +1,6 @@
 <?php
 //require __DIR__ . '\..\vendor\autoload.php';
-//require '..\app\Core\example-config.php';
+//require '..\app\Core\config.php';
 //
 //define('APPLICATION_PATH', getcwd().'/../app/');
 //define('PUBLIC_PATH', getcwd());
@@ -40,40 +40,40 @@
 //    require "errors/404.php";
 //}
 
-define('APP_PATH', getcwd().'/../app/');
+define('APP_PATH', getcwd() . '/../app/');
 define('PUBLIC_PATH', getcwd());
-require APP_PATH.'../vendor/autoload.php';
+require APP_PATH . '../vendor/autoload.php';
 require APP_PATH . 'Core/config.php';
 session_start();
 // /users/test
 $routes = explode('?', $_SERVER['REQUEST_URI']);
 $routes = explode('/', $routes[0]);
-$controller_name = 'indexController';
-$action_name = 'indexAction';
+$controllerName = 'indexController';
+$actionName = 'indexAction';
 // получаем контроллер
 if (!empty($routes[1])) {
-    $controller_name = ucfirst($routes[1]).'Controller'; //posts
-    $action_name = $routes[1].'Action'; //create
+    $controllerName = ucfirst($routes[1]) . 'Controller'; //posts
+    $actionName = $routes[1] . 'Action'; //create
 }
 
-$filename = APP_PATH."Controllers/".$controller_name.".php";
+$filename = APP_PATH . "Controllers/" . $controllerName . ".php";
 try {
     if (file_exists($filename)) {
         require_once $filename;
     } else {
         throw new Exception("File not found");
     }
-    $classname = '\App\Controllers\\'.$controller_name;// \App\Posts
+    $classname = '\App\Controllers\\' . $controllerName;// \App\Posts
     if (class_exists($classname)) {
         $controller = new $classname();
     } else {
         throw new Exception("File found but class not found");
     }
-    if (method_exists($controller, $action_name)) {
-        $controller->$action_name();
+    if (method_exists($controller, $actionName)) {
+        $controller->$actionName();
     } else {
         throw new Exception("Method not found");
     }
 } catch (Exception $e) {
-    require PUBLIC_PATH."/errors/404.php";
+    require PUBLIC_PATH . "/errors/404.php";
 }

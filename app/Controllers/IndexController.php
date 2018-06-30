@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\Core\MainController;
-use App\Core\View;
 use App\Models\User;
 
 class IndexController extends MainController
@@ -12,12 +11,13 @@ class IndexController extends MainController
 
     public function indexAction()
     {
-        if ($_POST['logout'] === '') {
+        if (isset($_POST['logout'])) {
             unset($_SESSION);
             session_destroy();
+            header('Location: /');
         }
         $errors = [];
-        if ($_POST['submit'] === '') {
+        if (isset($_POST['submit'])) {
             unset ($_POST['submit']);
             $_POST['login'] = htmlspecialchars($_POST['login']);
             $user = new User();
@@ -25,8 +25,8 @@ class IndexController extends MainController
             if (!$errors) {
                 $_SESSION['login'] = $_POST['login'];
             }
+            header('Location: /');
         }
-        $view = new View();
-        $view->twigLoad('auth', ['errors' => $errors, 'login' => $_POST['login']]);
+        $this->view->twigLoad('auth', ['errors' => $errors, 'login' => $_POST['login']]);
     }
 }

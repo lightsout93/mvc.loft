@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\Core\MainController;
-use App\Core\View;
 use App\Models\File;
 use App\Models\User;
 
@@ -13,7 +12,6 @@ class RegController extends MainController
 
     public function regAction()
     {
-        $view = new View();
         $data = [];
         $this->errors[0] = '';
         if ($_POST['submit'] === '') {
@@ -25,7 +23,7 @@ class RegController extends MainController
             $result = $user->createUser($data);
             if (!empty($_FILES['photo']['tmp_name'])) {
                 $photo = new File();
-                $photo->addFile();
+                $photo->addFile($_FILES['photo']['tmp_name']);
             }
             if ($result == false) {
                 $this->errors[0] = 'Пользователь с таким логином уже существует';
@@ -34,7 +32,7 @@ class RegController extends MainController
                 header('Location: /index');
             }
         }
-        $view->twigLoad('reg', ['errors' => $this->errors, 'post' => $_POST]);
+        $this->view->twigLoad('reg', ['errors' => $this->errors, 'post' => $_POST]);
     }
 
     private function validateForm($data)

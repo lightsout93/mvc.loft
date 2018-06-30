@@ -10,12 +10,16 @@ class User extends Model
 
     public function createUser($data)
     {
-        $user = $this->where('login', $data['login'])->get()->toArray();
-        if (empty($user)) {
-            $create = $this->create($data);
+        $user = $this->where('login', $data['login'])->first();
+        if ($user !== null) {
+            return null;
+        }
+        $create = $this->create($data);
+        if (!empty($create->login)) {
             return $create->login;
         }
-        return false;
+
+        throw new \RuntimeException();
     }
 
     public function loginUser($data)

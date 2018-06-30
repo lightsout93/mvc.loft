@@ -6,8 +6,11 @@ use Intervention\Image\ImageManagerStatic as IImage;
 
 class File
 {
-    public function addFile()
+    // file = $_FILES['photo']['tmp_name'];
+    public function addFile($file)
     {
-        IImage::make($_FILES['photo']['tmp_name'])->resize(150, 150)->save(PUBLIC_PATH.'/upload/'.$_POST['login'].'.jpg');
+        if (file_exists($file)) {
+            IImage::make($file)->resize(150, 150)->save(PUBLIC_PATH . '/upload/' . $_POST['login'] . '.jpg');
+        }
     }
 }

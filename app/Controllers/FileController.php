@@ -1,14 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: shika
- * Date: 29.06.2018
- * Time: 4:34
- */
+
 namespace App\Controllers;
 
 use App\Core\MainController;
-use App\Core\View;
 use App\Models\User;
 
 class FileController extends MainController
@@ -32,7 +26,6 @@ class FileController extends MainController
             }
             header('Location: /file');
         }
-        $view = new View();
-        $view->twigLoad('file', ['files' => $data]);
+        $this->view->twigLoad('file', ['files' => $data]);
     }
 }
